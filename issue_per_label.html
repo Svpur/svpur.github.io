@@ -1,10 +1,11 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
   <head>
     <title></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
     <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="大叔的个人小站，不定期更新我的学习心得，以及相关教程。">
     <link rel="stylesheet" href="css/common.css">
     <link rel="icon" href="images/avatar.jpg">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -34,20 +35,48 @@
           </ul>
         </div>
         <div class="col-lg-3 col-lg-offset-0 col-md-3 col-md-offset-0 visible-lg visible-md" style="margin: 72px auto 0 auto;">
-          <a style="line-height:1.1;font-weight:700;cursor:pointer;color:#808080;text-decoration: none">FEATURED TAGS</a>
-          <div class="tags" style="margin-top:10px" id="tags"></div>
+          <a class="right_title" style="line-height: 1.1;font-weight: 700">FEATURED TAGS</a>
+          <div class="tags" id="tags"></div>
+          <hr>
+          <a href="https://imuncle.github.io/content.html?id=41" target="_blank" class="right_title" style="line-height: 1.1;font-weight: 700">ABOUT ME</a>
+          <img src="images/xiesheng.jpg" style="margin-top:10px; margin-bottom:10px" class="img-responsive">
+          <p style="color: #bfbfbf; font-size: 14px;">Stay hungry, Stay foolish</p>
           <hr>
         </div>
       </div>
       <div style="text-align: center">
         <ul class="pagination" id="pages" style="display: none"></ul>
       </div>
+      <div class="footer" style="text-align: center">
+        <div id='icon' style="display: flex;justify-content: center;padding: 0;align-items: center"></div>
+        <div id="footer" style="text-align: center;background: #2c3e50;padding-top: 30px;color: white"></div>
+      </div>
     </div>
-    <div class="footer" style="text-align: center">
-      <div id='icon' style="display: flex;justify-content: center;padding: 0;align-items: center"></div>
-      <div id="footer" style="text-align: center;background: #2c3e50;padding-top: 30px;color: white"></div>
-    </div>
+    <img class="Totop" href="javascript:;" src="images/totop.png">
+    <canvas class="live2d hidden-xs hidden-sm" id="live2d" width="220" height="200"></canvas>
   </body>
+  <script src = "js/LAppDefine.js"></script>
+  <script src = "js/live2d.js"></script>
   <script src = "js/jquery.min.js"></script>
   <script src="js/gitblog.js"></script>
+  <script>
+    function IsPC() {
+      var userAgentInfo = navigator.userAgent;
+      var Agents = ["Android", "iPhone",
+        "SymbianOS", "Windows Phone",
+        "iPad", "iPod"];
+      var flag = true;
+      for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flag = false;
+            break;
+        }
+      }
+      return flag;
+    }
+    if(IsPC())
+    {
+        loadlive2d(LAppDefine.CANVAS_ID, LAppDefine.MODELS[0][0]);
+    }
+  </script>
 </html>

@@ -597,9 +597,6 @@ var gitblog = function(config) {
         this.issue_url = '';
         this.issue_perpage_url = '';
         this.issue_search_url = '';
-        this.author = '';
-        this.creator = '',
-        this.state = '';
         this.page = new Pages();
     }
 
@@ -658,37 +655,16 @@ var gitblog = function(config) {
             });
         },
         init: function() {
-            if(config.filter.creator != undefined && config.filter.creator != null) {
-                if(config.filter.creator == 'all') {
-                    this.author = '';
-                    this.creator = '';
-                } else {
-                    var authors= new Array();
-                    authors = config.filter.creator.split(",");
-                    for(var i in authors) {
-                        this.author += 'author:' + authors[i] + '+';
-                        this.creator += 'creator=' + authors[i] + '&';
-                    }
-                }
-            } else {
-                this.author = '';
-                this.creator = '';
-            }
-            if(config.filter.state != undefined && config.filter.state != null) {
-                this.state = config.filter.state;
-            } else {
-                this.state = 'all';
-            }
             if (self.options.label == undefined) {
                 if (self.options.q == undefined) {
                     this.issue_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo;
-                    this.issue_perpage_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues?' + this.creator + 'state=' + this.state + '&';
+                    this.issue_perpage_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues?creator=' + config.name + '&';
                 } else {
                     this.search(self.options.q);
                 }
             } else {
-                this.issue_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues?' + this.creator + 'labels=' + self.options.label + '&state=' + this.state;
-                this.issue_perpage_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues?' + this.creator + 'labels=' + self.options.label + '&state=' + this.state + '&';
+                this.issue_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues?labels=' + self.options.label;
+                this.issue_perpage_url = 'https://api.github.com/repos/' + config.name + '/' + config.repo + '/issues?creator=' + config.name + '&labels=' + self.options.label + '&';
                 document.getElementById('title').innerHTML = self.options.label;
                 $.ajax({
                     type: 'get',
@@ -707,8 +683,8 @@ var gitblog = function(config) {
         },
         search: function(search) {
             search = encodeURI(search);
-            this.issue_url = 'https://api.github.com/search/issues?q=' + search + ' ' + this.author + 'in:title,body+repo:' + config.name + '/' + config.repo + '+state:' + this.state;
-            this.issue_perpage_url = 'https://api.github.com/search/issues?q=' + search + ' ' + this.author + 'in:title,body+repo:' + config.name + '/' + config.repo + '+state:' + this.state + '&';
+            this.issue_url = 'https://api.github.com/search/issues?q=' + search + ' author:' + config.name + '+in:title,body+repo:' + config.name + '/' + config.repo;
+            this.issue_perpage_url = 'https://api.github.com/search/issues?q=' + search + ' author:' + config.name + '+in:title,body+repo:' + config.name + '/' + config.repo + '&';
         }
     }
 
